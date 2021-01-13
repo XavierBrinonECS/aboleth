@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aboleth-dev-93123-authRole",
+      "UnauthRoleArn": "arn:aws:iam::088417944319:role/amplify-aboleth-dev-93123-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::088417944319:role/amplify-aboleth-dev-93123-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-aboleth-dev-93123-deployment",
+      "UnauthRoleName": "amplify-aboleth-dev-93123-unauthRole",
+      "StackName": "amplify-aboleth-dev-93123",
+      "StackId": "arn:aws:cloudformation:eu-west-2:088417944319:stack/amplify-aboleth-dev-93123/1ae162a0-5582-11eb-b09e-0af4101b8acc",
+      "AmplifyAppId": "d312cw88l3c3jl"
+    }
+  }
+}
