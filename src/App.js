@@ -3,9 +3,17 @@ import React from 'react'
 import './App.css';
 
 function App () {
+  // let interval = React.useRef(null)
   React.useEffect(() => {
-    console.log({ connect: Window.connect })
-    Window.connect?.core?.initCCP({ /* ... */ });
+    console.log({ connect: window.connect })
+    window.connect?.core?.initCCP({ /* ... */ });
+    // interval.current = window.setInterval(() => {
+    //   console.log({ connect: window.connect })
+    // }, 1000)
+
+    // return () => {
+    //   window.clearInterval(interval.current)
+    // }
   })
 
   return (
