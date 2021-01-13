@@ -8,7 +8,8 @@ function App () {
   React.useEffect(() => {
     console.log({ connect: window.connect })
     window.connect?.core?.initCCP(ccpContainerRef.current, {
-      ccpUrl: 'https://dlg-connect-dev.awsapps.com/connect/ccp-v2/',
+      //      ccpUrl: 'https://dlg-connect-dev.awsapps.com/connect/ccp-v2/', // https://cx-ecs-chandank.awsapps.com/connect/login
+      ccpUrl: 'https://cx-ecs-chandank.awsapps.com/connect/ccp-v2/', // https://cx-ecs-chandank.awsapps.com/connect/login
       loginPopup: true,
       // loginUrl: REACT_APP_LOGIN_URL,
       softphone: {
