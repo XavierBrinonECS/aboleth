@@ -1,7 +1,13 @@
 import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 
-function App() {
+function App () {
+  React.useEffect(() => {
+    console.log({ connect: Window.connect })
+    Window.connect?.core?.initCCP({ /* ... */ });
+  })
+
   return (
     <div className="App">
       <header className="App-header">
