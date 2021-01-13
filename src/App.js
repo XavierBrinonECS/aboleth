@@ -13,6 +13,10 @@ function App () {
         disabledRingtone: false,
       },
     });
+
+    return () => {
+      window.connect?.core?.terminate();
+    }
   }, [])
 
   return (
