@@ -3,17 +3,13 @@ import React from 'react'
 import './App.css';
 
 function App () {
-  // let interval = React.useRef(null)
+  const ccpContainerRef = React.useRef(window.document.getElementById('root'))
+
   React.useEffect(() => {
     console.log({ connect: window.connect })
-    window.connect?.core?.initCCP({ /* ... */ });
-    // interval.current = window.setInterval(() => {
-    //   console.log({ connect: window.connect })
-    // }, 1000)
-
-    // return () => {
-    //   window.clearInterval(interval.current)
-    // }
+    window.connect?.core?.initCCP(ccpContainerRef.current, {
+      ccpUrl: 'https://dlg-connect-dev.awsapps.com/connect/ccp-v2/'
+    });
   })
 
   return (
