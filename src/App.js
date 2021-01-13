@@ -13,6 +13,24 @@ function App () {
         disabledRingtone: false,
       },
     });
+    window.connect?.agent(agent => {
+      agent.onStateChange(({ newState, oldState }) => {
+        console.log({ newState, oldState })
+        console.log({ contacts: agent.getContacts() })
+        const queuesARNs = agent.getAllQueueARNs();
+        agent.getEndpoints(
+          queuesARNs,
+          {
+            success: function (data) {
+              var endpoints = data.endpoints; // or data.addresses
+              console.log({ endpoints })
+            },
+            failure: function (err) {
+            }
+          }
+        );
+      });
+    });
 
     return () => {
       window.connect?.core?.terminate();
