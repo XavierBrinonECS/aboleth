@@ -3,7 +3,7 @@ import './App.css';
 
 function App () {
   const ccpContainerRef = React.useRef(window.document.getElementById('root'))
-  const secureIVREndpoint = React.useRef(null)
+  const secureIVREndpoint = React.useState(null)
 
   React.useEffect(() => {
     window.connect?.core?.initCCP(ccpContainerRef.current, {
@@ -65,13 +65,14 @@ function App () {
     return () => {
       window.connect?.core?.terminate();
     }
+    // eslint-disable-next-line
   }, [])
 
   return (
     <div className="App">
       <header className="App-header">
         <p>test</p>
-        <button onClick={ascend} disabled={secureIVREndpoint.current === null}>Secure IVR</button>
+        <button onClick={ascend} disabled={secureIVREndpoint === null}>Secure IVR</button>
       </header>
     </div>
   );
