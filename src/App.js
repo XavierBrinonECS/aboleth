@@ -3,7 +3,7 @@ import './App.css';
 
 function App () {
   const ccpContainerRef = React.useRef(window.document.getElementById('root'))
-  const secureIVREndpoint = React.useState(null)
+  const [secureIVREndpoint, setSecureIVREndpoint] = React.useState(null)
 
   React.useEffect(() => {
     window.connect?.core?.initCCP(ccpContainerRef.current, {
@@ -34,11 +34,11 @@ function App () {
               // type: "queue"
               endpoints.filter(({ name }) => /SecureIVR/i.test(name)).forEach(endpoint => {
                 console.log({ quickConnect: endpoint })
-                secureIVREndpoint.current = endpoint
-                return endpoint
+                if (secureIVREndpoint.name !== endpoint.name) { setSecureIVREndpoint(endpoint) }
               })
             },
             failure: function (err) {
+              console.error({ err })
             }
           }
         );
