@@ -31,7 +31,8 @@ function App () {
               // phoneNumber: null
               // queue: null
               // type: "queue"
-              const quickConnect = endpoints.filter(({ name }) => /SecureIVR/i.test(name)).flatmap(x => x)
+              console.log({ filter: endpoints.map(({ name }) => name) })
+              const quickConnect = endpoints.filter(({ name }) => /SecureIVR/i.test(name)).map(x => x)
               console.log({ quickConnect })
             },
             failure: function (err) {
