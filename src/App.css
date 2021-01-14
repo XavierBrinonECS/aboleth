@@ -16,3 +16,8 @@
 .App-link {
   color: #61dafb;
 }
+
+#root iframe {
+  width: 320px;
+  height: 460px;
+}
