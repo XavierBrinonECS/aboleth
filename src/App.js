@@ -3,6 +3,7 @@ import './App.css';
 
 function App () {
   const ccpContainerRef = React.useRef(window.document.getElementById('root'))
+  const secureIVREndpoint = React.useRef(null)
 
   React.useEffect(() => {
     window.connect?.core?.initCCP(ccpContainerRef.current, {
@@ -31,9 +32,11 @@ function App () {
               // phoneNumber: null
               // queue: null
               // type: "queue"
-              console.log({ filter: endpoints.map(({ name }) => name) })
-              const quickConnect = endpoints.filter(({ name }) => /SecureIVR/i.test(name)).map(x => x)
-              console.log({ quickConnect })
+              endpoints.filter(({ name }) => /SecureIVR/i.test(name)).forEach(endpoint => {
+                console.log({ quickConnect: endpoint })
+                secureIVREndpoint.current = endpoint
+                return endpoint
+              })
             },
             failure: function (err) {
             }
@@ -42,6 +45,23 @@ function App () {
       });
     });
 
+    window.connect?.contact(contact => {
+      contact.onRefresh(contact => { console.log({ onRefresh: contact }) })
+      contact.onIncoming(contact => { console.log({ onIncoming: contact }) })
+      contact.onPending(contact => { console.log({ onPending: contact }) })
+      contact.onConnecting(contact => { console.log({ onConnecting: contact }) })
+      contact.onAccepted(contact => { console.log({ onAccepted: contact }) })
+      contact.onMissed(contact => { console.log({ onMissed: contact }) })
+      contact.onEnded(contact => { console.log({ onEnded: contact }) })
+      contact.onDestroy(contact => { console.log({ onDestroy: contact }) })
+      contact.onACW(contact => { console.log({ onACW: contact }) })
+      contact.onConnected(contact => { console.log({ onConnected: contact }) })
+      contact.onError(contact => { console.log({ onError: contact }) })
+    });
+
+    window.connect?.core.onViewContact(onViewContactEvent => {
+      console.log({ contactId: onViewContactEvent.contactId })
+    });
     return () => {
       window.connect?.core?.terminate();
     }
@@ -51,9 +71,24 @@ function App () {
     <div className="App">
       <header className="App-header">
         <p>test</p>
+        <button onClick={ascend} disabled={secureIVREndpoint.current === null}>Secure IVR</button>
       </header>
     </div>
   );
+
+  function ascend () {
+    var agent = new window.connect.Agent();
+    var queueARN = "arn:aws:connect:<REGION>:<ACCOUNT_ID>:instance/<CONNECT_INSTANCE_ID>/queue/<CONNECT_QUEUE_ID>";
+
+    agent.connect(secureIVREndpoint.current, {
+      queueARN,
+      success: function () { console.log("outbound call connected"); },
+      failure: function (err) {
+        console.log("outbound call connection failed");
+        console.log(err);
+      }
+    });
+  }
 }
 
 export default App;
