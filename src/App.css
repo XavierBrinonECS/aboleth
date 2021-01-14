@@ -17,7 +17,7 @@
   color: #61dafb;
 }
 
-#root iframe {
-  width: 320px;
-  height: 460px;
+#root {
+  min-width: 320px;
+  min-height: 460px;
 }
