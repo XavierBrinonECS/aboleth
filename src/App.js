@@ -87,17 +87,17 @@ function App () {
         secIVR = endpoints
           .filter(({ name }) => /SecureIVR/i.test(name))
           .pop()
+
+        agent
+          .getContacts(window.connect.ContactType.VOICE)
+          .pop()
+          ?.addConnection(secIVR, {
+            success: data => { console.log({ addConnectionSuccess: data }) },
+            failure: data => { console.log({ addConnectionFailure: data }) }
+          })
       },
       failure: data => console.log({ getEndpointsFailure: data })
     });
-
-    agent
-      .getContacts(window.connect.ContactType.VOICE)
-      .pop()
-      ?.addConnection(secIVR, {
-        success: data => { console.log({ addConnectionSuccess: data }) },
-        failure: data => { console.log({ addConnectionFailure: data }) }
-      })
   }
 }
 export default App;
