@@ -78,27 +78,25 @@ function App () {
   );
 
   function ascend () {
-    var agent = new window.connect.Agent();
+    let agent = new window.connect.Agent();
     let secIVR = {}
     agent.getEndpoints(
       agent.getAllQueueARNs(), {
-      success: ({
-        endpoints
-      }) => {
-        console.log({ endpoints })
+      success: ({ endpoints }) => {
+        console.log({ getEndpointsSuccess: endpoints })
         secIVR = endpoints
-          .filter(endpoint => /SecureIVR/i.test(endpoint.name))
+          .filter(({ name }) => /SecureIVR/i.test(name))
           .pop()
       },
-      failure: data => console.log({ failure: data })
-    }
-    )
+      failure: data => console.log({ getEndpointsFailure: data })
+    });
+
     agent
       .getContacts(window.connect.ContactType.VOICE)
       .pop()
       ?.addConnection(secIVR, {
-        success: data => { console.log({ success: data }) },
-        failure: data => { console.log({ failure: data }) }
+        success: data => { console.log({ addConnectionSuccess: data }) },
+        failure: data => { console.log({ addConnectionFailure: data }) }
       })
   }
 }
