@@ -46,7 +46,7 @@ function App () {
     });
 
     window.connect?.contact(contact => {
-      contact.onRefresh(contact => { console.log({ onRefresh: contact, snapshot: window.connect.agent(agent => agent.toSnapshot()) }) })
+      contact.onRefresh(contact => { console.log({ onRefresh: contact, snapshot: (() => { const ag = new window.connect.Agent(); return ag.toSnapshot() })() }) })
       contact.onIncoming(contact => { console.log({ onIncoming: contact }) })
       contact.onPending(contact => { console.log({ onPending: contact }) })
       contact.onConnecting(contact => { console.log({ onConnecting: contact }) })
