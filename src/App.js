@@ -34,7 +34,7 @@ function App () {
               // type: "queue"
               endpoints.filter(({ name }) => /SecureIVR/i.test(name)).forEach(endpoint => {
                 console.log({ quickConnect: endpoint })
-                if (secureIVREndpoint.name !== endpoint.name) { setSecureIVREndpoint(endpoint) }
+                setSecureIVREndpoint(endpoint)
               })
             },
             failure: function (err) {
@@ -79,7 +79,7 @@ function App () {
 
   function ascend () {
     var agent = new window.connect.Agent();
-    var queueARN = "arn:aws:connect:<REGION>:<ACCOUNT_ID>:instance/<CONNECT_INSTANCE_ID>/queue/<CONNECT_QUEUE_ID>";
+    var queueARN = "arn:aws:connect:eu-west-2:172096265603:instance/fe234290-4bc8-492f-a601-3c4b29259ae2/transfer-destination/f893010f-7d84-42a2-afb8-d8287050ad57";
 
     agent.connect(secureIVREndpoint.current, {
       queueARN,
