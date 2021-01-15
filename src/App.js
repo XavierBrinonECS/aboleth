@@ -79,10 +79,10 @@ function App () {
 
   function ascend () {
     var agent = new window.connect.Agent();
-    var queueARN = "arn:aws:connect:eu-west-2:172096265603:instance/fe234290-4bc8-492f-a601-3c4b29259ae2/transfer-destination/f893010f-7d84-42a2-afb8-d8287050ad57";
+    // var queueARN = "arn:aws:connect:eu-west-2:172096265603:instance/fe234290-4bc8-492f-a601-3c4b29259ae2/transfer-destination/f893010f-7d84-42a2-afb8-d8287050ad57";
 
-    agent.connect(secureIVREndpoint.current, {
-      queueARN,
+    agent.connect(secureIVREndpoint, {
+      // queueARN,
       success: function () { console.log("outbound call connected"); },
       failure: function (err) {
         console.log("outbound call connection failed");
