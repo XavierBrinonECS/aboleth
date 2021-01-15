@@ -16,7 +16,7 @@ function App () {
     });
     window.connect?.agent(agent => {
       agent.onStateChange(({ newState, oldState }) => {
-        console.log({ newState, oldState })
+        console.log({ newState, oldState, snapshot: agent.toSnapshot() })
         console.log({ contacts: agent.getContacts() })
         const queuesARNs = agent.getAllQueueARNs();
         agent.getEndpoints(
