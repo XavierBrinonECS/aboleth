@@ -46,7 +46,43 @@ window.connect?.core?.initCCP(ccpContainerRef.current, {
 The `loginPopup` is the behavior of the ccp when the agent hasn't been authenticated yet.
 
 ### Transfer the call to the IVR
+The transfer is: 
+- a connection to the IVR endpoint 
+- added to the list of conctacts 
+- of the Agent object. 
 
+We first get access to the `Agent` object
+```js
+let agent = new window.connect.Agent();
+```
+
+From there we get the details of the endpoint, the `SecureIVR` endpoint.
+The Endpoint can be a phone number, but here it's a queueARN. 
+```js
+agent.getEndpoints(
+  agent.getAllQueueARNs(), {
+  success: ({ endpoints }) => {
+    secIVR = endpoints
+      .filter(({ name }) => /SecureIVR/i.test(name))
+      .pop()
+  // Do something with the endpoint
+  },
+  failure: data => console.log({ getEndpointsFailure: data })
+});
+```
+***Note: This is callback based, the actions are triggerd in cascade.
+
+Once the Endpoint is found, we add the connection to the Contacts:
+```js
+agent
+  .getContacts(window.connect.ContactType.VOICE)
+  .pop()
+  ?.addConnection(secIVR, {
+    success: data => { console.log({ addConnectionSuccess: data }) },
+    failure: data => { console.log({ addConnectionFailure: data }) }
+})
+```
+The add is what triggers the transfer.
 
 ## Assumptions
 * the CCP has been initialised already
