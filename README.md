@@ -5,9 +5,9 @@ For now the Proof of Concept is hosted in ECS AWS as an [amplify app](https://ma
 
 ### Authentication
 To run the PoC, the first step is to get authenticated:
-  * Login to Jumpcloud
-  * Select the AWS Connect Dev Profile
-  * Open the [amplify app](https://main.d312cw88l3c3jl.amplifyapp.com/)
+  - Login to Jumpcloud
+  - Select the AWS Connect Dev Profile
+  - Open the [amplify app](https://main.d312cw88l3c3jl.amplifyapp.com/)
 ### Receiving a call from the client
 On your mobile phone: 0808 189 5305
 
@@ -84,8 +84,21 @@ agent
 ```
 The add is what triggers the transfer.
 
+### Surfacing the contactID associated with the current call
+
+A contactId is used to reference in a unique way each contact/calls.
+See [API doc](https://github.com/amazon-connect/amazon-connect-streams/blob/master/Documentation.md#contactgetcontactid)
+Each new call/contact generates a new contactId, so it is best to fetch it at the
+last moment and not store it for too long.
+```js
+const { contactId } = agent
+    .getContacts(window.connect.ContactType.VOICE)
+    ?.pop() ?? {}
+```
+
 ## Assumptions
-* the CCP has been initialised already
+- the CCP has been initialised already
   - meaning the browser has loaded the library and `window.connect` is available
   - the iFrame is either hidden or fully visible by CSS styling
-*
+
+

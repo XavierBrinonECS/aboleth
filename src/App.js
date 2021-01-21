@@ -88,13 +88,18 @@ function App () {
           .filter(({ name }) => /SecureIVR/i.test(name))
           .pop()
 
-        agent
+        const contact = agent
           .getContacts(window.connect.ContactType.VOICE)
-          .pop()
-          ?.addConnection(secIVR, {
-            success: data => { console.log({ addConnectionSuccess: data }) },
+          ?.pop()
+        if (contact) {
+          const { contactId } = contact
+          // Do something with the contactId
+
+          contact?.addConnection(secIVR, {
+            success: data => { console.log({ addConnectionSuccess: data, contactId }) },
             failure: data => { console.log({ addConnectionFailure: data }) }
           })
+        }
       },
       failure: data => console.log({ getEndpointsFailure: data })
     });
