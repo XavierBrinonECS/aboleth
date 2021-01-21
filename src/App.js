@@ -93,7 +93,7 @@ function App () {
           ?.pop()
         if (contact) {
           const { contactId } = contact
-          // Do something with the contactId
+          console.log({ contactId })
 
           contact?.addConnection(secIVR, {
             success: data => { console.log({ addConnectionSuccess: data, contactId }) },

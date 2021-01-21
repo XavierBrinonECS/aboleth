@@ -96,6 +96,22 @@ const { contactId } = agent
     ?.pop() ?? {}
 ```
 
+If more info are needed, it might be easier to collect all of them via a snapshot.
+```js
+const snapshot = (() => { 
+  const ag = new window.connect.Agent()
+  return ag.toSnapshot()
+})() 
+```
+The contactId is also available in the snapshot objet.
+
+To access the contactId as soon as it is available, you can use the onViewContact event
+```js
+window.connect?.core.onViewContact(({ contactId }) => {
+  console.log({ onViewContactEvent: contactId })
+});
+```
+
 ## Assumptions
 - the CCP has been initialised already
   - meaning the browser has loaded the library and `window.connect` is available
