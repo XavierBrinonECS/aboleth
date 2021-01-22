@@ -23,22 +23,22 @@ function App () {
           queuesARNs,
           {
             success: function (data) {
-              var endpoints = data.endpoints; // or data.addresses
-              console.log({ endpoints })
-              // agentLogin: null
-              // endpointARN: "arn:aws:connect:eu-west-2:172096265603:instance/fe234290-4bc8-492f-a601-3c4b29259ae2/transfer-destination/f893010f-7d84-42a2-afb8-d8287050ad57"
-              // endpointId: "arn:aws:connect:eu-west-2:172096265603:instance/fe234290-4bc8-492f-a601-3c4b29259ae2/transfer-destination/f893010f-7d84-42a2-afb8-d8287050ad57"
-              // name: "SecureIVR"
-              // phoneNumber: null
-              // queue: null
-              // type: "queue"
+              var endpoints = data.endpoints
+              window.connect.getLog()
+                .info('Log Info')
+                .withObject({ endpoints })
+
               endpoints.filter(({ name }) => /SecureIVR/i.test(name)).forEach(endpoint => {
-                console.log({ quickConnect: endpoint })
+                window.connect.getLog()
+                  .info('Log Info')
+                  .withObject({ quickConnect: endpoint })
                 setSecureIVREndpoint(endpoint)
               })
             },
             failure: function (err) {
-              console.error({ err })
+              window.connect.getLog()
+                .warn('Log warn')
+                .withException({ err })
             }
           }
         );
@@ -47,7 +47,11 @@ function App () {
 
     window.connect?.contact(contact => {
       contact.onRefresh(contact => { console.log({ onRefresh: contact, snapshot: (() => { const ag = new window.connect.Agent(); return ag.toSnapshot() })() }) })
-      contact.onIncoming(contact => { console.log({ onIncoming: contact }) })
+      contact.onIncoming(contact => {
+        window.connect.getLog()
+          .info('Log Info')
+          .withObject({ onIncoming: contact })
+      })
       contact.onPending(contact => { console.log({ onPending: contact }) })
       contact.onConnecting(contact => { console.log({ onConnecting: contact }) })
       contact.onAccepted(contact => { console.log({ onAccepted: contact }) })
@@ -60,6 +64,9 @@ function App () {
     });
 
     window.connect?.core.onViewContact(onViewContactEvent => {
+      window.connect.getLog()
+        .info('Log Info')
+        .withObject({ contactId: onViewContactEvent.contactId })
       console.log({ contactId: onViewContactEvent.contactId })
     });
     return () => {
@@ -83,7 +90,10 @@ function App () {
     agent.getEndpoints(
       agent.getAllQueueARNs(), {
       success: ({ endpoints }) => {
-        console.log({ getEndpointsSuccess: endpoints })
+        window.connect.getLog()
+          .info('Log Info')
+          .withObject({ getEndpointsSuccess: endpoints })
+
         secIVR = endpoints
           .filter(({ name }) => /SecureIVR/i.test(name))
           .pop()
@@ -93,15 +103,29 @@ function App () {
           ?.pop()
         if (contact) {
           const { contactId } = contact
-          console.log({ contactId })
+          window.connect.getLog()
+            .info('Log Info')
+            .withObject({ contactId })
 
           contact?.addConnection(secIVR, {
-            success: data => { console.log({ addConnectionSuccess: data, contactId }) },
-            failure: data => { console.log({ addConnectionFailure: data }) }
+            success: data => {
+              window.connect.getLog()
+                .info('Log Info')
+                .withObject({ addConnectionSuccess: data, contactId })
+            },
+            failure: data => {
+              window.connect.getLog()
+                .info('Log Info')
+                .withObject({ addConnectionSuccess: data })
+            }
           })
         }
       },
-      failure: data => console.log({ getEndpointsFailure: data })
+      failure: data => {
+        window.connect.getLog()
+          .info('Log Info')
+          .withObject({ getEndpointsFailure: data })
+      }
     });
   }
 }
