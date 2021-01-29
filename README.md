@@ -112,6 +112,20 @@ window.connect?.core.onViewContact(({ contactId }) => {
 });
 ```
 
+## Pause / Resume
+### Contact IDs
+
+Pausing and Resuming a call is based on the contactID/initialContactID of the current contact.
+```js
+  let agent = new window.connect.Agent();
+  let [contact,] = agent
+    ?.getContacts(window.connect.ContactType.VOICE)
+  console.log({
+    initialContactId: contact.getInitialContactId(),
+    contactId: contact.getContactId()
+  })
+```
+
 ## Assumptions
 - the CCP has been initialised already
   - meaning the browser has loaded the library and `window.connect` is available
