@@ -88,18 +88,22 @@ function App () {
 
   function pauseCall () {
     let agent = new window.connect.Agent();
-    const { contactId } = agent
-      .getContacts(window.connect.ContactType.VOICE)
-      ?.pop() ?? {}
-    console.log({ contactId })
+    let [contact,] = agent
+      ?.getContacts(window.connect.ContactType.VOICE)
+    console.log({
+      initialContactId: contact.getInitialContactId(),
+      contactId: contact.getContactId()
+    })
   }
 
   function resumeCall () {
     let agent = new window.connect.Agent();
-    const { contactId } = agent
-      .getContacts(window.connect.ContactType.VOICE)
-      ?.pop() ?? {}
-    console.log({ contactId })
+    let [contact,] = agent
+      ?.getContacts(window.connect.ContactType.VOICE)
+    console.log({
+      initialContactId: contact.getInitialContactId(),
+      contactId: contact.getContactId()
+    })
   }
 
   function ascend () {
