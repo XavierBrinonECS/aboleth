@@ -49,8 +49,7 @@ function App () {
       contact.onRefresh(contact => {
         console.log({
           onRefresh: contact,
-          snapshot: (() => { const ag = new window.connect.Agent(); return ag.toSnapshot() })(),
-          snapshot2: (new window.connect.Agent()).toSnapshot()
+          snapshot: (new window.connect.Agent()).toSnapshot()
         })
       })
       contact.onIncoming(contact => {
