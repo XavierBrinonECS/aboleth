@@ -80,9 +80,27 @@ function App () {
       <header className="App-header">
         <p>test</p>
         <button onClick={ascend} disabled={secureIVREndpoint === null}>Secure IVR</button>
+        <button onClick={pauseCall} disabled={secureIVREndpoint === null}>Pause</button>
+        <button onClick={resumeCall} disabled={secureIVREndpoint === null}>Resume</button>
       </header>
     </div>
   );
+
+  function pauseCall () {
+    let agent = new window.connect.Agent();
+    const { contactId } = agent
+      .getContacts(window.connect.ContactType.VOICE)
+      ?.pop() ?? {}
+    console.log({ contactId })
+  }
+
+  function resumeCall () {
+    let agent = new window.connect.Agent();
+    const { contactId } = agent
+      .getContacts(window.connect.ContactType.VOICE)
+      ?.pop() ?? {}
+    console.log({ contactId })
+  }
 
   function ascend () {
     let agent = new window.connect.Agent();
