@@ -46,7 +46,13 @@ function App () {
     });
 
     window.connect?.contact(contact => {
-      contact.onRefresh(contact => { console.log({ onRefresh: contact, snapshot: (() => { const ag = new window.connect.Agent(); return ag.toSnapshot() })() }) })
+      contact.onRefresh(contact => {
+        console.log({
+          onRefresh: contact,
+          snapshot: (() => { const ag = new window.connect.Agent(); return ag.toSnapshot() })(),
+          snapshot2: (new window.connect.Agent()).toSnapshot()
+        })
+      })
       contact.onIncoming(contact => {
         window.connect.getLog()
           .info('Log Info')
@@ -120,9 +126,9 @@ function App () {
           .filter(({ name }) => /SecureIVR/i.test(name))
           .pop()
 
-        const contact = agent
+        const [contact,] = agent
           .getContacts(window.connect.ContactType.VOICE)
-          ?.pop()
+
         if (contact) {
           const { contactId } = contact
           window.connect.getLog()
