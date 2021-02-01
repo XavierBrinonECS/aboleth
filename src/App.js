@@ -95,20 +95,20 @@ function App () {
     let agent = new window.connect.Agent();
     let [contact,] = agent
       ?.getContacts(window.connect.ContactType.VOICE)
-    console.log({
-      initialContactId: contact.getInitialContactId(),
-      contactId: contact.getContactId()
-    })
+    const initialContactId = contact.getInitialContactId()
+    const contactId = contact.getContactId()
+
+    window.fetch(`https://gfdtv-connect-call-recording.dev.mycro.cloud/${contactId}/${initialContactId}/pause`)
   }
 
   function resumeCall () {
     let agent = new window.connect.Agent();
     let [contact,] = agent
       ?.getContacts(window.connect.ContactType.VOICE)
-    console.log({
-      initialContactId: contact.getInitialContactId(),
-      contactId: contact.getContactId()
-    })
+    const initialContactId = contact.getInitialContactId()
+    const contactId = contact.getContactId()
+
+    window.fetch(`https://gfdtv-connect-call-recording.dev.mycro.cloud/${contactId}/${initialContactId}/resume`)
   }
 
   function ascend () {
