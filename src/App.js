@@ -99,6 +99,8 @@ function App () {
     const contactId = contact.getContactId()
 
     window.fetch(`https://gfdtv-connect-call-recording.dev.mycro.cloud/${contactId}/${initialContactId}/pause`)
+      .then(response => response.json())
+      .then(data => console.log(data))
   }
 
   function resumeCall () {
@@ -109,6 +111,8 @@ function App () {
     const contactId = contact.getContactId()
 
     window.fetch(`https://gfdtv-connect-call-recording.dev.mycro.cloud/${contactId}/${initialContactId}/resume`)
+      .then(response => response.json())
+      .then(data => console.log(data))
   }
 
   function ascend () {
